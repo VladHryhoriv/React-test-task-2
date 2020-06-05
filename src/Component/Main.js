@@ -7,7 +7,7 @@ import Contain from './Contain/Contain';
 const AppWrapper = styled.div`
     margin: 0 auto;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1200px;
     height: 100%;
     display: flex;
     flex-direction: column;

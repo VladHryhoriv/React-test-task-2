@@ -46,7 +46,7 @@ const Header = props => {
         <HeaderWrapper>
             <NameOfSite>Git Users</NameOfSite>
             <WrapperLink>
-                <NavLink to="/start"><Item>Start</Item></NavLink>
+                <NavLink to="/git"><Item>Git</Item></NavLink>
                 <NavLink to="/users"><Item>Users</Item></NavLink>
                 <NavLink to="/me"><Item>My Account</Item></NavLink>
             </WrapperLink>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 
 const Active = styled.div`
@@ -6,6 +6,8 @@ const Active = styled.div`
     color: white;
     width: 100%;
     text-align: center;
+    margin:20px 0;
+    flex:0 0 auto;
     .notActive ,.active{
         padding: 0 5px;
         border: 2px solid black;
@@ -30,10 +32,6 @@ const Active = styled.div`
 export const Paginator = ({ totalCount, size, currentPage, setCurrentPageThunk, portionSize = 3 }) => {
     let pagesCount = Math.ceil(totalCount / size);
     let pages = [];
-
-    let [portionNumber, setPortionNumber] = useState(1);
-    let leftPortionNumber = (portionNumber - 1) * portionSize
-    let rightPortionNumber = portionNumber * portionSize
 
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
