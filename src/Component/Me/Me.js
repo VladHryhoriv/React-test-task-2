@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const WrapperMe = styled.div`
     margin-top:40px;
@@ -24,13 +25,14 @@ const About = styled.div`
 `;
 
 const Me = props => {
+    const { t } = useTranslation();
     return <WrapperMe>
         <MePhoto>
-            <img src={require('../../../photos/MeAva.jpg')} alt="NoImg"/>
+            <img src={require('../../photos/MeAva.jpg')} alt="NoImg"/>
         </MePhoto>
         <About>
             <div className="name">VladHryhoriv</div>
-            <div className="link">Link: <a href="https://github.com/VladHryhoriv">https://github.com/VladHryhoriv</a></div>
+            <div className="link">{t('Link')}: <a href="https://github.com/VladHryhoriv">https://github.com/VladHryhoriv</a></div>
         </About>
     </WrapperMe>
 };

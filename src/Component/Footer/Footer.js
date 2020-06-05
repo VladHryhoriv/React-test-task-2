@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const FooterWrapper = styled.footer`
     display: flex;
@@ -16,10 +17,11 @@ const Link = styled.a`
     text-decoration:none;
 `;
 
-const Footer = props => {
+const Footer = () => {
+    const { t } = useTranslation();
     return (
         <FooterWrapper>
-            <Link href="https://uk.wikipedia.org/wiki/GitHub">About Git</Link>
+            <Link href="https://uk.wikipedia.org/wiki/GitHub">{t('Foot')}</Link>
         </FooterWrapper>
     );
 };

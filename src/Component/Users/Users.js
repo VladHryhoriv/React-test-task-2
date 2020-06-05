@@ -55,7 +55,7 @@ const Users = ({users,fetching,...props}) => {
             <UsersWrap>
                 {users.map((userItem,index)=>{
                     return (index<9*currentPage && index>=(9*currentPage)-9)?
-                    <NavLinkA href={userItem.html_url}>
+                    <NavLinkA href={userItem.html_url} key={index}>
                         <User>
                             <UserPhoto src={userItem.owner.avatar_url}/>
                             <UserName>{userItem.name}</UserName>

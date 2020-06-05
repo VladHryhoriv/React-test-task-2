@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const StartWrapper = styled.div`
     display:flex;
@@ -22,18 +23,15 @@ const Photo = styled.div`
     }
 `;
 
-const Git = props => {
+const Git = () => {
+    const { t } = useTranslation();
     return (
         <StartWrapper>
             <Photo>
                 <img src={require('../../photos/git.png')}alt="NoImg"/>
             </Photo>
             <Text>
-                GitHub — один з найбільших веб-сервісів для спільної розробки програмного забезпечення. Існують безкоштовні 
-                та платні тарифні плани користування сайтом. Базується на системі керування версіями Git і розроблений на Ruby 
-                on Rails і Erlang компанією GitHub, Inc (раніше Logical Awesome).
-                Сервіс безкоштовний для проектів з відкритим вихідним кодом, з наданням користувачам усіх своїх 
-                можливостей (включаючи SSL), а для окремих індивідуальних проектів пропонуються різні платні тарифні плани.
+               {t('AboutGit')}
             </Text>
         </StartWrapper>
     );

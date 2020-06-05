@@ -43,9 +43,9 @@ export const Paginator = ({ totalCount, size, currentPage, setCurrentPageThunk, 
                 setCurrentPageThunk(currentPage - 1)}
         }}>&#8592;</span>
         {
-            pages.map(p => {
+            pages.map((p,index) => {
                 if (p < currentPage+3 && p > currentPage-3) {
-                        return <span className={currentPage === p ? "active" : "notActive"}
+                        return <span key={index} className={currentPage === p ? "active" : "notActive"}
                         onClick={(e) => { setCurrentPageThunk(p) }}>{p}</span >
                 }
                 else {
