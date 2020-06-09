@@ -5,7 +5,6 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 const HeaderWrapper = styled.div`
-    width:100%;
     display:flex;
     flex-wrap:wrap;
     border-bottom:2px solid gray;

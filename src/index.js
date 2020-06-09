@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './Component/Users/userSlice';
 import Preloader from './Component/Common/Preloader';
 import './i18next'
+import { store } from './Component/redux/store';
 
 ReactDOM.render(
   <BrowserRouter>

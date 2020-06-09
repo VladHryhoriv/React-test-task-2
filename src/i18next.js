@@ -3,7 +3,6 @@ import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-// const fallbackLng = ['en'];
 const availableLanguages = ['en', 'ru', 'uk'];
 
 

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { SetUserThunk } from './userSlice';
+import React, { useEffect, useState, memo } from 'react';
 import Preloader from '../Common/Preloader';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Paginator } from '../Common/Paginator';
+import ReactPaginate from 'react-paginate';
+import { SetUserThunk } from '../redux/thunk/userThunk';
 
 const WrapperUsers = styled.div`
 	width:100%;
@@ -13,6 +13,48 @@ const WrapperUsers = styled.div`
 	flex-direction:column;
 	min-height:100%;
 	justify-content: space-between;
+	.pagination{
+		display:flex;
+		width:100%;
+		justify-content:center;
+		align-items:center;
+		margin:10px 0;
+		li{
+			list-style-type:none;
+			border:2px solid black;
+			cursor: pointer;
+			padding:.5%;
+			margin:0 1px;
+			width:18px;
+			height:18px;
+			text-align:center
+		}
+		.active{
+			background:black;
+			color:white;
+		}
+		.previous ,.next{
+			border:none;
+			a{
+				border: solid black;
+    		border-width: 0 3px 3px 0;
+    		display: inline-block;
+    		padding: 3px;
+				height:3px;
+				width:3px;	
+			}
+		}
+		.previous{
+			a{
+				transform: rotate(135deg);
+			}
+		}
+		.next{
+			a{
+				transform: rotate(-45deg);
+			}
+		}
+	}
 `;
 const User = styled.div`
 	flex-wrap:wrap;
@@ -45,10 +87,16 @@ const UsersWrap = styled.div`
 
 const Users = ({ users, fetching, ...props }) => {
 	const [currentPage, setCurrentPage] = useState(1);
-	
+	const pageCount = Math.ceil(users.length / 9)
+
+	const setPage = (e) => {
+		setCurrentPage(++e.selected)
+	}
+
 	useEffect(() => {
 		props.SetUserThunk()
 	})
+
 	return (
 		<>
 			{
@@ -68,7 +116,18 @@ const Users = ({ users, fetching, ...props }) => {
 							}
 							)}
 						</UsersWrap>
-						<Paginator totalCount={users.length} size={9} currentPage={currentPage} setCurrentPageThunk={setCurrentPage} />
+						<ReactPaginate
+							previousLabel={""}
+							nextLabel={""}
+							breakLabel={"..."}
+							breakClassName={"break-me"}
+							pageCount={pageCount}
+							marginPagesDisplayed={2}
+							pageRangeDisplayed={3}
+							onPageChange={setPage}
+							containerClassName={"pagination"}
+							subContainerClassName={"pages pagination"}
+							activeClassName={"active"} />
 					</WrapperUsers>
 			}
 		</>
@@ -83,5 +142,6 @@ const mapStateToProps = state => {
 }
 
 export default compose(
+	memo,
 	connect(mapStateToProps, { SetUserThunk })
 )(Users);

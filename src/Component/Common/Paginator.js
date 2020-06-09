@@ -1,68 +1,71 @@
-import React from 'react'
-import styled from 'styled-components';
+import React, { PureComponent } from 'react'
+import axios from 'axios'
+import ReactPaginate from 'react-paginate';
 
-const Active = styled.div`
-	font-weight: bold;
-	color: white;
-	width: 100%;
-	text-align: center;
-	margin:20px 0;
-	flex:0 0 auto;
-	.notActive ,.active{
-		padding: 0 5px;
-		border: 2px solid black;
-		margin: 0 5px;
-		cursor: pointer;
-		transition: .5s;
+export default class App extends PureComponent {
+	constructor(props) {
+		super(props);
+		this.state = {
+			offset: 0,
+			data: [],
+			perPage: 5,
+			currentPage: 0
+		};
+		this.handlePageClick = this
+			.handlePageClick
+			.bind(this);
 	}
-	.active{
-		background-color:black;
-	}
-	.notActive:hover{
-		background-color: white;
-	}
-	.activePage{
-		padding: 30px 0;
-	}
-	.prev,.next{
-		cursor: pointer;
-	}
-`;
+	receivedData() {
+		axios
+			.get(`https://jsonplaceholder.typicode.com/photos`)
+			.then(res => {
 
-export const Paginator = ({ totalCount, size, currentPage, setCurrentPageThunk, portionSize = 3 }) => {
-	let pagesCount = Math.ceil(totalCount / size);
-	let pages = [];
+				const data = res.data;
+				const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+				const postData = slice.map(pd => <React.Fragment>
+					<p>{pd.title}</p>
+					<img src={pd.thumbnailUrl} alt="" />
+				</React.Fragment>)
 
-	for (let i = 1; i <= pagesCount; i++) {
-		pages.push(i)
+				this.setState({
+					pageCount: Math.ceil(data.length / this.state.perPage),
+					postData
+				})
+			});
 	}
+	handlePageClick = (e) => {
+		const selectedPage = e.selected;
+		const offset = selectedPage * this.state.perPage;
 
-	const changePage = () => {
-		if (currentPage - 1 !== 0) {
-			setCurrentPageThunk(currentPage - 1)
-		}
+		this.setState({
+			currentPage: selectedPage,
+			offset: offset
+		}, () => {
+			this.receivedData()
+		});
+	};
+
+	componentDidMount() {
+		this.receivedData()
 	}
+	render() {
+		return (
+			<div>
+				{this.state.postData}
+				<ReactPaginate
+					previousLabel={`prev`}
+					nextLabel={"next"}
+					breakLabel={"..."}
+					breakClassName={"break-me"}
+					pageCount={this.state.pageCount}
+					marginPagesDisplayed={2}
+					pageRangeDisplayed={5}
+					onPageChange={this.handlePageClick}
+					containerClassName={"pagination"}
+					subContainerClassName={"pages pagination"}
+					activeClassName={"active"} />
+			</div>
 
-	return (
-		<>
-			<Active>
-				<span className="prev" onClick={changePage}>&#8592;</span>
-				{
-					pages.map((p, index) => {
-						if (p < currentPage + 3 && p > currentPage - 3) {
-							return <span key={index} className={currentPage === p ? "active" : "notActive"}
-								onClick={(e) => { setCurrentPageThunk(p) }}>{p}</span >
-						}
-						else {
-							return null
-						}
-					})
-
-				}
-				<span className="next" onClick={(e) => {
-					if (currentPage !== pagesCount) setCurrentPageThunk(currentPage + 1)
-				}}>&#8594;</span>
-			</Active>
-		</>
-	)
+		)
+	}
 }
